@@ -1,0 +1,16 @@
+[
+{
+  "modid": "edenweapon",
+  "name": "Eden Weapon Mod",
+  "description": "Mod for B-Paradise.eu server.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://www.b-paradise.eu/",
+  "updateUrl": "",
+  "authorList": ["Sanquira","Paulicek"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
