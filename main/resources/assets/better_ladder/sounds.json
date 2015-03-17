@@ -1,0 +1,6 @@
+{
+"ender_ladder_place": {"category": "neutral", "sounds": ["mine_deploy"]},
+"ender_ladder_connect": {"category": "neutral", "sounds": ["mine_activate"]},
+"ender_ladder_charge": {"category": "neutral", "sounds": ["mine_charge"]},
+"metal_ladder": {"category": "neutral", "sounds": ["pl_ladder1"]}
+}
