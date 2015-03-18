@@ -1,7 +1,5 @@
 package edenweapon;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockStone;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -16,9 +14,14 @@ public class EdenWeapon {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		Item plasmaBlaster = new ItemAcientPlasmaBlaster().setTextureName(EdenWeapon.MODID + ":bow").setUnlocalizedName("acientPlasmaBlaster");
-		GameRegistry.registerItem(plasmaBlaster, plasmaBlaster.getUnlocalizedName());
-		Block test = new BlockStone().setBlockName("testBlock");
-		GameRegistry.registerBlock(test, test.getUnlocalizedName());
+		Item darkSword = new ItemDarkSword().setUnlocalizedName("itemDoubleSaber").setTextureName(getTexture("itemDoubleSaber"));
+		Item lightShovel = new ItemLightShovel().setUnlocalizedName("itemLightShovel");
+		GameRegistry.registerItem(lightShovel, lightShovel.getUnlocalizedName());
+		GameRegistry.registerItem(darkSword, darkSword.getUnlocalizedName());
+
 	}
+
+	 public static String getTexture(String name) {
+	 return EdenWeapon.MODID + ":" + name;
+	 }
 }
