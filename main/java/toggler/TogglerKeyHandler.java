@@ -3,6 +3,7 @@ package toggler;
 import java.lang.reflect.Field;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -51,6 +52,39 @@ public class TogglerKeyHandler {
 			newState = !mc.thePlayer.isSprinting();
 			mc.thePlayer.setSprinting(newState);
 			message = Toggler.Keys.toggleSprint.getKeyDescription();
+		} else if (Toggler.Keys.toggleDuplicate.getIsKeyPressed()) {
+			mc.thePlayer.capabilities.allowFlying = true;
+			// mc.playerController.setGameType(GameType.CREATIVE);
+			// Field t;
+			// try {
+			// if (Toggler.DEBUG) {
+			// t = EntityClientPlayerMP.class.getDeclaredField("invulnerable");
+			// } else {
+			// t = EntityClientPlayerMP.class.getDeclaredField("field_78774_b");
+			// }
+			// t.setAccessible(true);
+			// t.setBoolean(mc.thePlayer, true);
+			// NetHandlerPlayClient obj = (NetHandlerPlayClient)
+			// t.get(mc.playerController);
+			// obj.addToSendQueue(new C10PacketCreativeInventoryAction(-1,
+			// new
+			// ItemStack(Items.spawn_egg,32,120)));
+			// } catch (NoSuchFieldException e) {
+			// e.printStackTrace();
+			// for (Field f : PlayerControllerMP.class.getDeclaredFields())
+			// {
+			// System.out.println(f.getName());
+			// }
+			// } catch (SecurityException e) {
+			// e.printStackTrace();
+			// } catch (IllegalArgumentException e) {
+			// e.printStackTrace();
+			// } catch (IllegalAccessException e) {
+			// e.printStackTrace();
+			// } catch (NoSuchFieldException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 		}
 		if (toggledKey != null) {
 			newState = !toggledKey.getIsKeyPressed();

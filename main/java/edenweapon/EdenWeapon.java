@@ -16,11 +16,10 @@ public class EdenWeapon {
 	public void init(FMLInitializationEvent event) {
 		Item darkSword = new ItemDarkSword().setUnlocalizedName("itemDoubleSaber").setTextureName(getTexture("itemDoubleSaber"));
 		Item lightShovel = new ItemLightShovel().setUnlocalizedName("itemLightShovel");
-		Item lightSpell = new ItemLightSpell().setUnlocalizedName("itemLightSpell");
+		Item lightSpell = new ItemLightSpell().setUnlocalizedName("itemLightSpell").setTextureName(getTexture("itemLightSpell"));
 		GameRegistry.registerItem(lightSpell,lightSpell.getUnlocalizedName());
 		GameRegistry.registerItem(lightShovel, lightShovel.getUnlocalizedName());
 		GameRegistry.registerItem(darkSword, darkSword.getUnlocalizedName());
-
 	}
 
 	 public static String getTexture(String name) {

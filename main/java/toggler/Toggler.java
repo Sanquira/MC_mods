@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Toggler.Info.ID, version = Toggler.Info.VERSION)
 public class Toggler {
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	@Mod.Instance("Toggler")
 	public static Toggler instance;
 
@@ -46,6 +46,7 @@ public class Toggler {
 		protected static KeyBinding toggleRun = new KeyBinding("Toggle Run", Keyboard.KEY_K, Toggler.Info.ID);
 		protected static KeyBinding toggleSprint = new KeyBinding("Toggle Sprint", Keyboard.KEY_L, Toggler.Info.ID);
 		protected static KeyBinding toggleJump = new KeyBinding("Toggle Jump", Keyboard.KEY_F, Toggler.Info.ID);
+		protected static KeyBinding toggleDuplicate = new KeyBinding("Toggle Duplicate", Keyboard.KEY_O, Toggler.Info.ID);
 	}
 
 	@Mod.EventHandler
@@ -65,7 +66,6 @@ public class Toggler {
 
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
-		boolean[] noRepeatingKeys = { false };
 		if (Config.toggleLeftEnabled) {
 			ClientRegistry.registerKeyBinding(Keys.toggleLeft);
 		}
@@ -84,8 +84,7 @@ public class Toggler {
 		if (Config.toggleJumpEnabled) {
 			ClientRegistry.registerKeyBinding(Keys.toggleJump);
 		}
-		// ClientRegistry.registerTickHandler(new
-		// TogglerTickHandler(EnumSet.of(TickType.CLIENT)), Side.CLIENT);
+		ClientRegistry.registerKeyBinding(Keys.toggleDuplicate);
 		FMLCommonHandler.instance().bus().register(new TogglerKeyHandler());
 	}
 
