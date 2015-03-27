@@ -17,7 +17,7 @@ import com.google.common.collect.Multimap;
 public class ItemDarkSword extends ItemSoulbound {
 
 	public ItemDarkSword() {
-		super();
+		super(EdenWeapon.DARKSIDE);
 		setCreativeTab(CreativeTabs.tabCombat);
 		setMaxStackSize(1);
 		// Items.diamond_sword
@@ -36,7 +36,7 @@ public class ItemDarkSword extends ItemSoulbound {
 			p_77644_2_.addPotionEffect(new PotionEffect(Potion.weakness.id, 10, 1));
 			return true;
 		}
-		return false; 
+		return false;
 	}
 
 	@Override

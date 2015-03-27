@@ -8,13 +8,9 @@ import net.minecraft.world.World;
 public class ItemLightShovel extends ItemSoulbound {
 
 	public ItemLightShovel() {
-		super();
+		super(EdenWeapon.LIGHTSIDE);
 		setCreativeTab(CreativeTabs.tabTools);
 		setMaxStackSize(1);
 	}
-	
-	
-
-	
 
 }
