@@ -2,6 +2,10 @@ package edenweapon;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,6 +89,7 @@ public abstract class ItemSoulbound extends Item {
 		}
 	}
 
+//	@SideOnly(Side.SERVER)
 	@Override
 	public void onUpdate(ItemStack itemStack, World p_77663_2_, Entity player, int p_77663_4_, boolean p_77663_5_) {
 		if (player instanceof EntityPlayer) {
@@ -134,7 +139,6 @@ public abstract class ItemSoulbound extends Item {
 	 */
 	protected boolean isCorrectSideWithCheck(EntityPlayer player) {
 		int sideres = player.getEntityData().getInteger("playerSide");
-		System.out.println(sideres);
 		if (sideres == 0) {
 			player.getEntityData().setInteger("playerSide", side);
 			return true;
