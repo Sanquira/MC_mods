@@ -1,13 +1,29 @@
 package edenweapon;
 
+import java.awt.TexturePaint;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.client.resources.ResourcePackListEntry;
+import net.minecraft.client.resources.ResourcePackRepository;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -51,12 +67,24 @@ public class ItemLightSpell extends ItemSoulbound {
 	 * Called whenever this item is equipped and the right mouse button is
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
+
 	public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
 		ArrowNockEvent event = new ArrowNockEvent(p_77659_3_, p_77659_1_);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
 			return event.result;
 		}
+
+		/*
+		try {
+			List rpt = Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries();
+			for (int i = 0; i < rpt.size(); i++) {
+				System.out.println(((ResourcePackRepository.Entry) rpt.get(0)).getResourcePackName());
+				System.out.println(Minecraft.getMinecraft().getResourcePackRepository().getDirResourcepacks().getAbsolutePath());
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}//*/
 
 		p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
 
