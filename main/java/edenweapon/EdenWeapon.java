@@ -1,6 +1,7 @@
 package edenweapon;
 
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,6 +26,7 @@ public class EdenWeapon {
 		GameRegistry.registerItem(lightSpell, lightSpell.getUnlocalizedName());
 		GameRegistry.registerItem(lightShovel, lightShovel.getUnlocalizedName());
 		GameRegistry.registerItem(darkSword, darkSword.getUnlocalizedName());
+		MinecraftForge.EVENT_BUS.register(new EdenWeaponEventHandler());
 	}
 
 	public static String getTexture(String name) {

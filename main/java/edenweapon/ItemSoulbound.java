@@ -89,7 +89,7 @@ public abstract class ItemSoulbound extends Item {
 		}
 	}
 
-//	@SideOnly(Side.SERVER)
+	// @SideOnly(Side.SERVER)
 	@Override
 	public void onUpdate(ItemStack itemStack, World p_77663_2_, Entity player, int p_77663_4_, boolean p_77663_5_) {
 		if (player instanceof EntityPlayer) {
@@ -127,7 +127,8 @@ public abstract class ItemSoulbound extends Item {
 	}
 
 	public void resetSide(EntityPlayer player) {
-		player.getEntityData().setInteger("playerSide", 0);
+		ExtendedPlayer prop = ExtendedPlayer.get(player);
+		prop.setSide(0);
 	}
 
 	/**
@@ -138,17 +139,17 @@ public abstract class ItemSoulbound extends Item {
 	 * @return true if is on correct side or not yet defined else false
 	 */
 	protected boolean isCorrectSideWithCheck(EntityPlayer player) {
-		int sideres = player.getEntityData().getInteger("playerSide");
+		ExtendedPlayer prop = ExtendedPlayer.get(player);
+		int sideres = prop.getSide();
+		System.out.println(prop.getSide());
 		if (sideres == 0) {
-			player.getEntityData().setInteger("playerSide", side);
+			prop.setSide(side);
 			return true;
 		} else if (side != sideres) {
 			return false;
 		}
 		return true;
 	}
-	
-	
 
 	protected void killHereticPlayer(EntityPlayer player) {
 		player.inventory.clearInventory(null, -1);
