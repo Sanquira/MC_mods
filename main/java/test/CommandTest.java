@@ -3,6 +3,7 @@ package test;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 
 public class CommandTest extends CommandBase {
@@ -32,7 +33,9 @@ public class CommandTest extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
-		// TODO Auto-generated method stub
+		for (String string : MinecraftServer.getServer().getAllUsernames()) {
+			System.out.println(string);
+		}
 		if (p_71515_1_ instanceof EntityPlayer) {
 			EntityPlayer pl = (EntityPlayer) p_71515_1_;
 			pl.addChatMessage(new ChatComponentText(pl.getCommandSenderName() + ", " + pl.getDisplayName()));
