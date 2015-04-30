@@ -40,35 +40,36 @@ public abstract class ItemSoulbound extends Item {
 		if (!par1ItemStack.stackTagCompound.getString("bindedToPlayer").isEmpty()) {
 			par3List.add(EnumChatFormatting.DARK_PURPLE + "Soulbound to " + par1ItemStack.stackTagCompound.getString("bindedToPlayer"));
 		}
-		if (!isCorrectSideWithCheck(p_77624_2_)) {
-			par3List.add(EnumChatFormatting.RED + "This item is from oposite god. If you use it, you will be punished!!");
-		}
+//		if (!isCorrectSideWithCheck(p_77624_2_)) {
+//			par3List.add(EnumChatFormatting.RED + "This item is from oposite god. If you use it, you will be punished!!");
+//		}
 	}
 
 	@Override
 	public void onCreated(ItemStack par1ItemStack, World p_77622_2_, EntityPlayer par3EntityPlayer) {
 		super.onCreated(par1ItemStack, p_77622_2_, par3EntityPlayer);
 		testTagCompoundExist(par3EntityPlayer, par1ItemStack);
-		isCorrectSideWithCheck(par3EntityPlayer);
+//		Side side = FMLCommonHandler.instance().getEffectiveSide()
+//		isCorrectSideWithCheck(par3EntityPlayer);
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World p_77659_2_, EntityPlayer player) {
-		if (!isCorrectSideWithCheck((EntityPlayer) player)) {
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!isCorrectSideWithCheck((EntityPlayer) player) && !world.isRemote) {
 			killHereticPlayer((EntityPlayer) player);
 		}
 		if (testSoulbound(player, stack)) {
 			punishPlayer(player, stack);
 			return stack;
 		}
-		return super.onItemRightClick(stack, p_77659_2_, player);
+		return super.onItemRightClick(stack, world, player);
 	}
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
-		if (!isCorrectSideWithCheck((EntityPlayer) player)) {
-			killHereticPlayer((EntityPlayer) player);
-		}
+//		if (!isCorrectSideWithCheck((EntityPlayer) player)) {
+//			killHereticPlayer((EntityPlayer) player);
+//		}
 		if (testSoulbound(player, itemstack)) {
 			punishPlayer(player, itemstack);
 			return true;
@@ -78,9 +79,9 @@ public abstract class ItemSoulbound extends Item {
 
 	@Override
 	public boolean hitEntity(ItemStack p_77644_1_, EntityLivingBase p_77644_2_, EntityLivingBase p_77644_3_) {
-		if (!isCorrectSideWithCheck((EntityPlayer) p_77644_3_)) {
-			killHereticPlayer((EntityPlayer) p_77644_3_);
-		}
+//		if (!isCorrectSideWithCheck((EntityPlayer) p_77644_3_)) {
+//			killHereticPlayer((EntityPlayer) p_77644_3_);
+//		}
 		if (testSoulbound((EntityPlayer) p_77644_3_, p_77644_1_)) {
 			punishPlayer((EntityPlayer) p_77644_3_, p_77644_1_);
 			return false;
@@ -89,13 +90,14 @@ public abstract class ItemSoulbound extends Item {
 		}
 	}
 
-	// @SideOnly(Side.SERVER)
 	@Override
-	public void onUpdate(ItemStack itemStack, World p_77663_2_, Entity player, int p_77663_4_, boolean p_77663_5_) {
+	public void onUpdate(ItemStack itemStack, World world, Entity player, int p_77663_4_, boolean p_77663_5_) {
 		if (player instanceof EntityPlayer) {
 			if (!((EntityPlayer) player).capabilities.isCreativeMode) {
 				testSoulbound((EntityPlayer) player, itemStack);
-				isCorrectSideWithCheck((EntityPlayer) player);
+				if (!world.isRemote) {
+					isCorrectSideWithCheck((EntityPlayer) player);
+				}
 			}
 		}
 	}
@@ -141,7 +143,7 @@ public abstract class ItemSoulbound extends Item {
 	protected boolean isCorrectSideWithCheck(EntityPlayer player) {
 		ExtendedPlayer prop = ExtendedPlayer.get(player);
 		int sideres = prop.getSide();
-		System.out.println(prop.getSide());
+		System.out.println(sideres);
 		if (sideres == 0) {
 			prop.setSide(side);
 			return true;

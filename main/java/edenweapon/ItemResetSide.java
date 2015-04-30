@@ -1,5 +1,6 @@
 package edenweapon;
 
+import scala.reflect.api.Internals.ReificationSupportApi.ImplicitParamsExtractor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

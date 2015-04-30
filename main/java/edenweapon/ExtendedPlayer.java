@@ -77,7 +77,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties {
 		// that will conflict with vanilla. Not good. So just use a unique tag
 		// name.
 		compound.setTag(EXT_PROP_NAME, properties);
-
+		System.out.println("SAVED PLAYER DATA");
 	}
 
 	// Load whatever data you saved
@@ -88,6 +88,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties {
 		NBTTagCompound properties = (NBTTagCompound) compound.getTag(EXT_PROP_NAME);
 		// Get our data from the custom tag compound
 		this.side = properties.getInteger("playerSide");
+		System.out.println("LOADED PLAYER DATA");
 	}
 
 	/*
