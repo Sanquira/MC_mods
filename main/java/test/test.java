@@ -1,11 +1,7 @@
 package test;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.PlayerSelector;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.ForgeHooks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -32,6 +28,5 @@ public class test {
 	public void serverStart(FMLServerStartingEvent e){
 		ServerCommandManager ss = (ServerCommandManager)MinecraftServer.getServer().getCommandManager();
 		ss.registerCommand(new CommandTest());
-		
 	}
 }
