@@ -11,6 +11,12 @@ public class CommandTest extends CommandBase {
 	public int getRequiredPermissionLevel() {
 		return 0;
 	}
+	
+	@Override
+	public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 	@Override
 	public String getCommandName() {
