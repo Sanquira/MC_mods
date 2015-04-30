@@ -8,6 +8,11 @@ import net.minecraft.util.ChatComponentText;
 public class CommandTest extends CommandBase {
 
 	@Override
+	public int getRequiredPermissionLevel() {
+		return 0;
+	}
+
+	@Override
 	public String getCommandName() {
 		// TODO Auto-generated method stub
 		return "test";
