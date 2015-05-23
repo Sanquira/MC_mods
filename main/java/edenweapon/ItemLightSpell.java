@@ -64,8 +64,7 @@ public class ItemLightSpell extends ItemSoulbound {
 	}
 
 	/**
-	 * Called whenever this item is equipped and the right mouse button is
-	 * pressed. Args: itemStack, world, entityPlayer
+	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
 
 	public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
@@ -74,17 +73,6 @@ public class ItemLightSpell extends ItemSoulbound {
 		if (event.isCanceled()) {
 			return event.result;
 		}
-
-		/*
-		try {
-			List rpt = Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries();
-			for (int i = 0; i < rpt.size(); i++) {
-				System.out.println(((ResourcePackRepository.Entry) rpt.get(0)).getResourcePackName());
-				System.out.println(Minecraft.getMinecraft().getResourcePackRepository().getDirResourcepacks().getAbsolutePath());
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}//*/
 
 		p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
 
