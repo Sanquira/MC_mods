@@ -2,10 +2,6 @@ package edenweapon;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraft.entity.DataWatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +26,6 @@ public abstract class ItemSoulbound extends Item {
 		super();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer p_77624_2_, List par3List, boolean p_77624_4_) {
 		super.addInformation(par1ItemStack, p_77624_2_, par3List, p_77624_4_);
@@ -40,17 +35,17 @@ public abstract class ItemSoulbound extends Item {
 		if (!par1ItemStack.stackTagCompound.getString("bindedToPlayer").isEmpty()) {
 			par3List.add(EnumChatFormatting.DARK_PURPLE + "Soulbound to " + par1ItemStack.stackTagCompound.getString("bindedToPlayer"));
 		}
-		// if (!isCorrectSideWithCheck(p_77624_2_)) {
-		// par3List.add(EnumChatFormatting.RED + "This item is from oposite god. If you use it, you will be punished!!");
-		// }
+		if (!isCorrectSideWithCheck(p_77624_2_)) {
+			par3List.add(EnumChatFormatting.RED + "This item is from oposite god.");
+			par3List.add(EnumChatFormatting.RED + "If you use it, you will be punished!!");
+		}
 	}
 
 	@Override
 	public void onCreated(ItemStack par1ItemStack, World p_77622_2_, EntityPlayer par3EntityPlayer) {
 		super.onCreated(par1ItemStack, p_77622_2_, par3EntityPlayer);
 		testTagCompoundExist(par3EntityPlayer, par1ItemStack);
-		// Side side = FMLCommonHandler.instance().getEffectiveSide()
-		// isCorrectSideWithCheck(par3EntityPlayer);
+		isCorrectSideWithCheck(par3EntityPlayer);
 	}
 
 	@Override
@@ -58,6 +53,9 @@ public abstract class ItemSoulbound extends Item {
 		if (!isCorrectSideWithCheck((EntityPlayer) player) && !world.isRemote) {
 			killHereticPlayer((EntityPlayer) player);
 		}
+		ExtendedPlayer prop = ExtendedPlayer.get(player);
+		int sideres = prop.getSide();
+		System.out.println("Sideres after check: " + sideres);
 		if (testSoulbound(player, stack)) {
 			punishPlayer(player, stack);
 			return stack;
@@ -67,9 +65,9 @@ public abstract class ItemSoulbound extends Item {
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
-		// if (!isCorrectSideWithCheck((EntityPlayer) player)) {
-		// killHereticPlayer((EntityPlayer) player);
-		// }
+		if (!isCorrectSideWithCheck((EntityPlayer) player)) {
+			killHereticPlayer((EntityPlayer) player);
+		}
 		if (testSoulbound(player, itemstack)) {
 			punishPlayer(player, itemstack);
 			return true;
@@ -79,9 +77,9 @@ public abstract class ItemSoulbound extends Item {
 
 	@Override
 	public boolean hitEntity(ItemStack p_77644_1_, EntityLivingBase p_77644_2_, EntityLivingBase p_77644_3_) {
-		// if (!isCorrectSideWithCheck((EntityPlayer) p_77644_3_)) {
-		// killHereticPlayer((EntityPlayer) p_77644_3_);
-		// }
+		if (!isCorrectSideWithCheck((EntityPlayer) p_77644_3_)) {
+			killHereticPlayer((EntityPlayer) p_77644_3_);
+		}
 		if (testSoulbound((EntityPlayer) p_77644_3_, p_77644_1_)) {
 			punishPlayer((EntityPlayer) p_77644_3_, p_77644_1_);
 			return false;
@@ -95,14 +93,12 @@ public abstract class ItemSoulbound extends Item {
 		if (player instanceof EntityPlayer) {
 			if (!((EntityPlayer) player).capabilities.isCreativeMode) {
 				testSoulbound((EntityPlayer) player, itemStack);
-				if (!world.isRemote) {
-					isCorrectSideWithCheck((EntityPlayer) player);
-				}
+				isCorrectSideWithCheck((EntityPlayer) player);
 			}
 		}
 	}
 
-	protected void testTagCompoundExist(EntityPlayer player, ItemStack itemStack) {
+	protected String testTagCompoundExist(EntityPlayer player, ItemStack itemStack) {
 		if (!itemStack.hasTagCompound()) {
 			NBTTagCompound nbtc = new NBTTagCompound();
 			itemStack.setTagCompound(nbtc);
@@ -111,26 +107,18 @@ public abstract class ItemSoulbound extends Item {
 		if (itemStack.stackTagCompound.getString("bindedToPlayer").isEmpty()) {
 			itemStack.stackTagCompound.setString("bindedToPlayer", player.getDisplayName());
 		}
-
+		return itemStack.stackTagCompound.getString("bindedToPlayer");
 	}
 
 	protected boolean testSoulbound(EntityPlayer player, ItemStack itemStack) {
-		if (itemStack.stackTagCompound == null) {
-			testTagCompoundExist(player, itemStack);
-		}
-		if (!itemStack.stackTagCompound.getString("bindedToPlayer").equals(player.getDisplayName())) {
+		if (!testTagCompoundExist(player, itemStack).equals(player.getDisplayName())) {
 			return true;
 		}
 		return false;
 	}
 
 	protected void punishPlayer(EntityPlayer player, ItemStack itemStack) {
-		player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "You are not allowed to use this item."));
-	}
-
-	public void resetSide(EntityPlayer player) {
-		ExtendedPlayer prop = ExtendedPlayer.get(player);
-		prop.setSide(0);
+		player.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "This item is bounded to " + testTagCompoundExist(player, itemStack)));
 	}
 
 	/**
@@ -142,7 +130,6 @@ public abstract class ItemSoulbound extends Item {
 	protected boolean isCorrectSideWithCheck(EntityPlayer player) {
 		ExtendedPlayer prop = ExtendedPlayer.get(player);
 		int sideres = prop.getSide();
-		System.out.println(sideres);
 		if (sideres == 0) {
 			prop.setSide(side);
 			return true;
@@ -153,9 +140,9 @@ public abstract class ItemSoulbound extends Item {
 	}
 
 	protected void killHereticPlayer(EntityPlayer player) {
-		// player.inventory.clearInventory(null, -1);
-		// player.experienceTotal = 0;
-		// player.attackEntityFrom(DamageSource.magic, 1000);
+		player.inventory.clearInventory(null, -1);
+		player.experienceTotal = 0;
+		player.attackEntityFrom(DamageSource.magic, 1000);
 		player.performHurtAnimation();
 		player.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + "You are heretic!!!"));
 	}

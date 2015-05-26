@@ -20,7 +20,6 @@ public class ItemDarkSword extends ItemSoulbound {
 		super(EdenWeapon.DARKSIDE);
 		setCreativeTab(CreativeTabs.tabCombat);
 		setMaxStackSize(1);
-		// Items.diamond_sword
 	}
 
 	@Override

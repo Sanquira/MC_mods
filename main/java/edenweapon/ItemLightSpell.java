@@ -46,10 +46,40 @@ public class ItemLightSpell extends ItemSoulbound {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack p_77615_1_, World world, EntityPlayer player, int p_77615_4_) {
 		double rad = 10;
+		double maxStr = 2.5;
+
+		int j = this.getMaxItemUseDuration(p_77615_1_) - p_77615_4_;
+		float f = (float) j / 20.0F;
+		f = (f * f + f * 2.0F) / 3.0F;
+
+		if ((double) f < 0.1D)
+		{
+			return;
+		}
+
+		if (f > 1.0F)
+		{
+			f = 1.0F;
+		}
+
 		ArrayList<Entity> ents = (ArrayList<Entity>) world.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(player.posX - rad, player.posY - rad, player.posZ - rad, player.posX + rad, player.posY + rad, player.posZ + rad));
 		for (Entity entity : ents) {
-			entity.motionY = 1;
+			double vecx = entity.posX - player.posX;
+			double vecz = entity.posZ - player.posZ;
+			double eucl = Math.sqrt(vecx * vecx - vecz * vecz);
+			if (eucl > rad) {
+				continue;
+			}
+			vecx = vecx / eucl;
+			vecz = vecz / eucl;
+			entity.motionX = vecx * f;
+			entity.motionZ = vecz * f;
+			entity.motionY = gaussStrength(maxStr * f, rad / 2, eucl);
 		}
+	}
+
+	private double gaussStrength(double maxStr, double radi, double dist) {
+		return maxStr * Math.exp(-((dist * dist) / (2 * radi * radi)));
 	}
 
 	public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_) {
@@ -68,6 +98,7 @@ public class ItemLightSpell extends ItemSoulbound {
 	 */
 
 	public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
+		super.onItemRightClick(p_77659_1_, p_77659_2_, p_77659_3_);
 		ArrowNockEvent event = new ArrowNockEvent(p_77659_3_, p_77659_1_);
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
