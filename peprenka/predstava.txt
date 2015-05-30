@@ -1,0 +1,56 @@
+vsechny itemy by nemeli mit durabilitu (meli by byt neznicitelne)
+tento mod je zamyslen jako odmeny za questy na edenu -> 
+a by o ne byl zajem tak napr mece musi byt na stejne urovni jako nejlepsi volne pristupny mec (amber sword)
+
+svetla moc
+
+Sword of the lightness
+--10 attack damage (5 srdicek)
+--sekundarni vlastnost: pokud ho hrác drzí dostava regeneraci 1
+
+Celestial pickaxe
+--o trochu rychlejsi nez dia pick
+(nevim v cem se tam ta rychlost udava ani jakou ma hodnotu, ale ty jsi starsi a skusenejsi, ty si poradis)
+
+Light AoE spell (jmeno se asi zmeni)
+--napad skajdy
+--pri pouziti odhodi vsechny moby/hrace v okoli silou knockback III
+--vsem mobum/hracum v okoli udìlí 5 damage (2,5 srdièka)
+
+temna moc
+
+bow of the nightmare
+--vetsi damage nez normalni luk (ani zde nevim jak se damage udava, rekneme silnejsi o 10%)
+--trefenemu mobu/hraci udeli blindness na 5 sekund
+
+Sword of the nine hells
+--12 attack damage (6 srdicek)
+--obeti udìlí weakness I a wither I
+
+pickaxe of the titans
+--obdoba celestial pickaxe, jina textura
+
+Dark AoE spell
+--dalsi napad skajdy
+--obetem v okoli udeli knockback I
+--6 attack damge (3 srdicka)
+--zapali je (neco ve stilu fire aspekt I)
+
+u tech spelu nevim jestli by ten item se po pouziti skonzumoval nebo by mel nejaky viditelny cooldown
+ten cooldown by byl fajnovejsi, ale take slozitejsi, takze nemusi byt
+BTW - koukal jsem na EE3 a ma tam udelanou zmenu textury aniz by se hraci menil v ruce item (preskakoval) - tento soubor jsem pribalil, ackoliv si myslim ze neni cely
+
+petrenkovy naprosto nepotrebne veci
+ano petrenko si pridal i itemy pro sebe, nemusi byt pridany, zalezi jen na tve nalade
+
+void doublesaber
+--12 attack damage
+--obeti udeli weakness II
+
+Acient plasma blaster
+--vyzva, nejposlednejsi item ktery bych cekal ze udelas - tady zas pro zmenu fantaziroval petrenko 
+--3D model asi ti dojde, kde by ho hrac mel drzet
+--v podstate luk, jehoz projektil nepada a pri kontaktu s povrchem / mobem ci hracem exploduje
+--stejne silny jako nightmare luk
+--misto natahovani jako u luku se v predni casti zbrane bude zvetsovat energeticka jiskra az po urcitou hodnotu (jako plne natazený luk) - pozor animace
+--texturu vybuchu, projektilu, nabijeni kdyztak dodam zalezi na to jestli na tenhle item budes mit naladu

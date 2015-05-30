@@ -6,6 +6,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -49,9 +51,13 @@ public class PacketResponse implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketResponse message, MessageContext ctx) {
-			if ("".contains(message.getAdresat())) {
+			if ("sendLoud".contains(message.getAdresat())) {
 				IChatComponent ichatcomponent = new ChatComponentText(message.mes);
 				MinecraftServer.getServer().getConfigurationManager().sendChatMsg(ichatcomponent);
+				return null;
+			}
+			System.out.println(ctx.getServerHandler().playerEntity.getCommandSenderName() + ": " + message.mes);
+			if ("Server".contains(message.getAdresat())) {
 				return null;
 			}
 			BPHelper.network.sendTo(new PacketResponse(ctx.getServerHandler().playerEntity.getCommandSenderName(), message.getMessage()),

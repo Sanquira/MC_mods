@@ -12,12 +12,13 @@ import java.util.zip.ZipFile;
 
 import javax.imageio.ImageIO;
 
+import BPHelper.BPHelper.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
 
 public class ResourcePackTest {
 
-	public static void testResourcePack(PacketTest message) {
+	public static void testResourcePack(PacketString message) {
 		List rpt = Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries();
 		navesti: {
 			ZipFile zf;
@@ -28,10 +29,12 @@ public class ResourcePackTest {
 					Enumeration<? extends ZipEntry> en = zf.entries();
 					while (en.hasMoreElements()) {
 						ZipEntry ze = en.nextElement();
-						if (ze.getName().contains("/stone.png")) {
-							if (isAlfa(zf, ze)) {
-								isHacker(message);
-								break navesti;
+						for (String tested : Config.blocksForTest) {
+							if (ze.getName().contains(tested)) {
+								if (isAlfa(zf, ze)) {
+									isHacker(message);
+									break navesti;
+								}
 							}
 						}
 					}
@@ -40,7 +43,8 @@ public class ResourcePackTest {
 					e.printStackTrace();
 				}
 			}
-			BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), "Im not your hacker... for now"));
+			// TODO
+			// BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), BPHelper.Config.strMessageInnocent));
 		}
 	}
 
@@ -90,13 +94,12 @@ public class ResourcePackTest {
 		return false;
 	}
 
-	private static void isHacker(PacketTest message) {
-		if (message.isLoud()) {
-			System.out.println("Bude load");
-			BPHelper.network.sendToServer(new PacketResponse("",
-					Minecraft.getMinecraft().thePlayer.getDisplayName() + ": Im HACKER! Im using X-Ray Resource Pack! Please BAN me!!!"));
+	private static void isHacker(PacketString message) {
+		if (message.getStrings().contains("loud")) {
+			BPHelper.network.sendToServer(new PacketString("sendLoud", Minecraft.getMinecraft().thePlayer.getDisplayName(),Minecraft.getMinecraft().thePlayer.getDisplayName() + ": " + BPHelper.Config.strMessageGuiltyLoud));
 		}
-		BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), "Im hacker!!!"));
+		// TODO
+		// BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), BPHelper.Config.strMessageGuilty));
 	}
 
 }
