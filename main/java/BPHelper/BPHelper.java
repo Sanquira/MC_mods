@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.command.PlayerNotFoundException;
@@ -18,9 +19,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -35,15 +34,12 @@ public class BPHelper {
 	public static final class Info {
 		public static final String ID = "bphelper";
 		public static final String NAME = "BPHelper";
-		public static final String VERSION = "1.7.10-1.1";
+		public static final String VERSION = "1.7.10-2.0";
 		public static final String CHANNEL = "bphelper";
 	}
 
 	public static SimpleNetworkWrapper network;
-
-	// for (ModContainer str : Loader.instance().getActiveModList()) {
-	// System.out.println(str.getName());
-	// }
+	public static HashMap<Integer, byte[]> particularImages = new HashMap<Integer, byte[]>();
 
 	public static class Config {
 		public static String strMessageInnocent = "Im not your hacker... for now";
@@ -60,17 +56,15 @@ public class BPHelper {
 			createOrLoadConfig(config);
 		}
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Info.CHANNEL);
-		network.registerMessage(Handlers.HandlerTestPacket.class, PacketString.class, 0, Side.CLIENT);
-		// network.registerMessage(PacketTest.Handler.class, PacketTest.class, 0, Side.SERVER);
-		// network.registerMessage(PacketTest.Handler.class, PacketTest.class, 1, Side.CLIENT);
-		// network.registerMessage(PacketResponse.HandlerServer.class, PacketResponse.class, 2, Side.SERVER);
-		// network.registerMessage(PacketResponse.HandlerClient.class, PacketResponse.class, 3, Side.CLIENT);
-		// network.registerMessage(PacketString.HandlerClientConfig.class, PacketString.class, 4, Side.CLIENT);
+		network.registerMessage(Handlers.HandlerPacketClient.class, PacketString.class, 0, Side.CLIENT);
+		network.registerMessage(Handlers.HandlerPacketServer.class, PacketString.class, 1, Side.SERVER);
+		network.registerMessage(Handlers.HandlerPacketImageClient.class, PacketImage.class, 2, Side.CLIENT);
+		network.registerMessage(Handlers.HandlerPacketImageServer.class, PacketImage.class, 3, Side.SERVER);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-//		MinecraftForge.EVENT_BUS.register(new EventClass());
+		MinecraftForge.EVENT_BUS.register(new EventClass());
 	}
 
 	private void createOrLoadConfig(File config) {

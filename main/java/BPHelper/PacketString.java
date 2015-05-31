@@ -73,38 +73,9 @@ public class PacketString implements IMessage {
 		return reciever;
 	}
 
-	// public static class HandlerClientConfig implements IMessageHandler<PacketString, IMessage> {
-	//
-	// @Override
-	// public IMessage onMessage(PacketString message, MessageContext ctx) {
-	// ArrayList<String> strings = message.getStrings();
-	// BPHelper.Config.strMessageGuilty = strings.remove(0);
-	// BPHelper.Config.strMessageGuiltyLoud = strings.remove(0);
-	// BPHelper.Config.strMessageInnocent = strings.remove(0);
-	// BPHelper.Config.blocksForTest = strings;
-	// return null;
-	// }
-	//
-	// }
-	//
-	// public static class HandlerServerDiff implements IMessageHandler<PacketString, IMessage> {
-	//
-	// @Override
-	// public IMessage onMessage(PacketString message, MessageContext ctx) {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	//
-	// }
-	//
-	// public static class HandlerClientDiff implements IMessageHandler<PacketString, IMessage> {
-	//
-	// @Override
-	// public IMessage onMessage(PacketString message, MessageContext ctx) {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	//
-	// }
+	@Override
+	public String toString() {
+		return "PacketString [header=" + header + ", sender=" + sender + ", reciever=" + reciever + ", strings=" + strings + "]";
+	}
 
 }

@@ -12,9 +12,9 @@ import java.util.zip.ZipFile;
 
 import javax.imageio.ImageIO;
 
-import BPHelper.BPHelper.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
+import BPHelper.BPHelper.Config;
 
 public class ResourcePackTest {
 
@@ -32,7 +32,7 @@ public class ResourcePackTest {
 						for (String tested : Config.blocksForTest) {
 							if (ze.getName().contains(tested)) {
 								if (isAlfa(zf, ze)) {
-									isHacker(message);
+									isHacker(message, tested);
 									break navesti;
 								}
 							}
@@ -43,8 +43,7 @@ public class ResourcePackTest {
 					e.printStackTrace();
 				}
 			}
-			// TODO
-			// BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), BPHelper.Config.strMessageInnocent));
+			BPHelper.network.sendToServer(new PacketString("returnXRTRes", Minecraft.getMinecraft().thePlayer.getDisplayName(), message.getStrings().get(0), "0"));
 		}
 	}
 
@@ -94,12 +93,11 @@ public class ResourcePackTest {
 		return false;
 	}
 
-	private static void isHacker(PacketString message) {
+	private static void isHacker(PacketString message, String block) {
 		if (message.getStrings().contains("loud")) {
-			BPHelper.network.sendToServer(new PacketString("sendLoud", Minecraft.getMinecraft().thePlayer.getDisplayName(),Minecraft.getMinecraft().thePlayer.getDisplayName() + ": " + BPHelper.Config.strMessageGuiltyLoud));
+			BPHelper.network.sendToServer(new PacketString("sendLoud", Minecraft.getMinecraft().thePlayer.getDisplayName(), "allPlayers"));
 		}
-		// TODO
-		// BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), BPHelper.Config.strMessageGuilty));
+		BPHelper.network.sendToServer(new PacketString("returnXRTRes", Minecraft.getMinecraft().thePlayer.getDisplayName(), message.getStrings().get(0), "1", block));
 	}
 
 }

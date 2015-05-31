@@ -32,7 +32,7 @@ public class CommandXRT extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "usage: /xrt <player> <loud,diff> ";
+		return "usage: /xrt <player> <loud,diff,img> ";
 	}
 
 	@Override
