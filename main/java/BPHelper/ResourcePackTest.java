@@ -14,10 +14,11 @@ import javax.imageio.ImageIO;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.ResourcePackRepository;
+import BPHelper.BPHelper.Config;
 
 public class ResourcePackTest {
 
-	public static void testResourcePack(PacketTest message) {
+	public static void testResourcePack(PacketString message) {
 		List rpt = Minecraft.getMinecraft().getResourcePackRepository().getRepositoryEntries();
 		navesti: {
 			ZipFile zf;
@@ -28,10 +29,12 @@ public class ResourcePackTest {
 					Enumeration<? extends ZipEntry> en = zf.entries();
 					while (en.hasMoreElements()) {
 						ZipEntry ze = en.nextElement();
-						if (ze.getName().contains("/stone.png")) {
-							if (isAlfa(zf, ze)) {
-								isHacker(message);
-								break navesti;
+						for (String tested : Config.blocksForTest) {
+							if (ze.getName().contains(tested)) {
+								if (isAlfa(zf, ze)) {
+									isHacker(message, tested);
+									break navesti;
+								}
 							}
 						}
 					}
@@ -40,7 +43,7 @@ public class ResourcePackTest {
 					e.printStackTrace();
 				}
 			}
-			BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), "Im not your hacker... for now"));
+			BPHelper.network.sendToServer(new PacketString("returnXRTRes", Minecraft.getMinecraft().thePlayer.getDisplayName(), message.getStrings().get(0), "0"));
 		}
 	}
 
@@ -90,13 +93,11 @@ public class ResourcePackTest {
 		return false;
 	}
 
-	private static void isHacker(PacketTest message) {
-		if (message.isLoud()) {
-			System.out.println("Bude load");
-			BPHelper.network.sendToServer(new PacketResponse("",
-					Minecraft.getMinecraft().thePlayer.getDisplayName() + ": Im HACKER! Im using X-Ray Resource Pack! Please BAN me!!!"));
+	private static void isHacker(PacketString message, String block) {
+		if (message.getStrings().contains("loud")) {
+			BPHelper.network.sendToServer(new PacketString("sendLoud", Minecraft.getMinecraft().thePlayer.getDisplayName(), "allPlayers"));
 		}
-		BPHelper.network.sendToServer(new PacketResponse(message.getMessage(), "Im hacker!!!"));
+		BPHelper.network.sendToServer(new PacketString("returnXRTRes", Minecraft.getMinecraft().thePlayer.getDisplayName(), message.getStrings().get(0), "1", block));
 	}
 
 }

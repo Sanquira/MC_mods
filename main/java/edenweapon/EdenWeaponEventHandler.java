@@ -15,7 +15,7 @@ public class EdenWeaponEventHandler {
 	}
 
 	@SubscribeEvent
-	public void asdf(EntityJoinWorldEvent event) {
+	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
 			ExtendedPlayer.get((EntityPlayer) event.entity).sync();
 		}

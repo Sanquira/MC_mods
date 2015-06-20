@@ -1,5 +1,6 @@
 package BPHelper;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,19 +32,13 @@ public class CommandXRT extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		return "usage: /xrt <player> <loud>";
+		return "usage: /xrt <player> <loud,diff,img> ";
 	}
 
 	@Override
 	public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
-		boolean loud = false;
-		if (p_71515_2_.length > 2 || p_71515_2_.length == 0) {
+		if (p_71515_2_.length > 3 || p_71515_2_.length == 0) {
 			throw new WrongUsageException(getCommandUsage(null), new Object[0]);
-		}
-		if (p_71515_2_.length == 2) {
-			if (p_71515_2_[1].contains("1")) {
-				loud = true;
-			}
 		}
 		navesti:
 		{
@@ -54,7 +49,12 @@ public class CommandXRT extends CommandBase {
 				String username = player.getDisplayName();
 				if (username.equals(p_71515_2_[0])) {
 					p_71515_1_.addChatMessage(new ChatComponentText("Testing " + EnumChatFormatting.BLUE + p_71515_2_[0] + EnumChatFormatting.RESET + " for X-ray RP."));
-					BPHelper.network.sendTo(new PacketTest(p_71515_1_.getCommandSenderName(), loud), player);
+					ArrayList<String> arr = new ArrayList<String>();
+					arr.add(p_71515_1_.getCommandSenderName());
+					for (String string : p_71515_2_) {
+						arr.add(string);
+					}
+					BPHelper.network.sendTo(new PacketString("requestTesting", "Server", username, arr), player);
 					break navesti;
 				}
 			}
